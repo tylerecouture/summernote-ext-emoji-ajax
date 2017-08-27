@@ -1,4 +1,4 @@
-# summernote-ext-emoji
+# summernote-ext-emoji-ajax
 A summernote extension that uses the github emoji api and loads them via ajax.
 
 All the other [emoji extensions](https://github.com/summernote/awesome-summernote) I tried were either old/broken or weren't doing it for me.  Mostly I had problems with the browser stalling as it loaded the images.
