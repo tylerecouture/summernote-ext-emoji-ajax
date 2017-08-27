@@ -55,7 +55,7 @@
                   children: [
                       ui.button({
                           className: 'dropdown-toggle',
-                          contents: '<i class="fa fa-smile-o"/> ' + ui.icon(options.icons.caret, 'span'),
+                          contents: '&#9786;' + ui.icon(options.icons.caret, 'span'),
                           tooltip: 'Emoji',
                           data: {
                               toggle: 'dropdown'
