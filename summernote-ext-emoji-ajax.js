@@ -97,17 +97,7 @@
                     // remove the loading icon
                     $('.note-ext-emoji-loading').remove();
 
-                    // insert the emoji buttons
-                    $.each(window.emojiUrls, function (name, url) {
-                        //console.log(index + ": " + value);
-                        $list.append(
-                            '<button type="button" title="' + name + '" ' +
-                            'class="note-emoji-btn btn btn-link" ' +
-                            'tabindex="-1">' +
-                            '    <img src="' + url + '" />' +
-                            '</button>'
-                        );
-                    });
+                    self.populateWithEmojis($list);
 
                     $("button", $list).click(function (event) {
                         var $button = $(this);
@@ -159,6 +149,20 @@
                 context.invoke('editor.focus');
                 context.invoke('editor.insertNode', img);
             };
+            
+            self.populateWithEmojis = function($container) {
+                $.each(window.emojiUrls, function (name, url) {
+                    //console.log(index + ": " + value);
+                    setTimeout(function() { // prevents lag during DOM insertion
+                        $container.append(
+                            '<button type="button" title="' + name + '" ' +
+                            'class="note-emoji-btn btn btn-link" tabindex="-1">' +
+                            '    <img src="' + url + '" />' +
+                            '</button>'
+                        );
+                    }, 0);
+                });
+            }
 
         }
     });
