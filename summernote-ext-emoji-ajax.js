@@ -97,15 +97,25 @@
                     // remove the loading icon
                     $('.note-ext-emoji-loading').remove();
 
-                    self.populateWithEmojis($list);
-
-                    $("button", $list).click(function (event) {
-                        var $button = $(this);
-                        var $img = $('img', $button);
-                        event.preventDefault();
-                        context.invoke('emoji.insertEmoji', $button.attr('title'), $img.attr('src'));
-                    });
-                });
+                    $.each(window.emojiUrls, function (name, url) {
+                        setTimeout(function() { // prevents lag during DOM insertion
+                            var $btn = $('<button/>',
+                                {
+                                    'class': 'note-emoji-btn btn btn-link',
+                                    'title': name,
+                                    'type': 'button',
+                                    'tabindex': '-1'
+                                });
+                            var $img = $('<img/>', {'src': url});
+                            $btn.html($img);
+                            $btn.click( function(event) {
+                                event.preventDefault();
+                                context.invoke('emoji.insertEmoji', name, url);
+                            });
+                            $list.append($btn);
+                        }, 0); //timeout
+                    }); // $each
+                }); // .then
 
                 // filter the emoji list based on current search text
                 self.$search.keyup(function () {
@@ -149,21 +159,6 @@
                 context.invoke('editor.focus');
                 context.invoke('editor.insertNode', img);
             };
-            
-            self.populateWithEmojis = function($container) {
-                $.each(window.emojiUrls, function (name, url) {
-                    //console.log(index + ": " + value);
-                    setTimeout(function() { // prevents lag during DOM insertion
-                        $container.append(
-                            '<button type="button" title="' + name + '" ' +
-                            'class="note-emoji-btn btn btn-link" tabindex="-1">' +
-                            '    <img src="' + url + '" />' +
-                            '</button>'
-                        );
-                    }, 0);
-                });
-            }
-
         }
     });
 }));
